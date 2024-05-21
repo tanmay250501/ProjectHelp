@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const Carousel = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -20,8 +20,17 @@ export const Carousel = () => {
         setCurrentSlide(index);
     };
 
+    // Auto-scroll functionality
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide();
+        }, 3000); // Change slide every 3 seconds
+
+        return () => clearInterval(interval);
+    }, [currentSlide]);
+
     return (
-        <div className="relative w-full flex justify-center items-center" data-carousel="slide">
+        <div className="relative w-full flex justify-center items-center mt-20" data-carousel="slide">
             {/* Carousel wrapper */}
             <div className="relative h-56 overflow-hidden rounded-lg md:h-96 w-full max-w-4xl mx-auto">
                 {slides.map((slide, index) => (
